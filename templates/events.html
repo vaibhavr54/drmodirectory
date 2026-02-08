@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Events</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>Events</h1>
+      <p>Grouped by hour to simulate timeline-based clustering.</p>
+    </div>
+    <nav>
+      <a href="{{ url_for('index') }}">Overview</a>
+      <a href="{{ url_for('clusters') }}">Clusters</a>
+      <a href="{{ url_for('events') }}">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      {% if events %}
+        <table class="events-table">
+          <thead>
+            <tr>
+              <th>Event Key</th>
+              <th>Images</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for event in events %}
+              <tr>
+                <td>{{ event['event_key'] }}</td>
+                <td>{{ event['count'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No events recorded yet.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clusters</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>Face-Like Clusters</h1>
+      <p>Images that matched the similarity threshold for clustering.</p>
+    </div>
+    <nav>
+      <a href="{{ url_for('index') }}">Overview</a>
+      <a href="{{ url_for('clusters') }}">Clusters</a>
+      <a href="{{ url_for('events') }}">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      {% if clusters %}
+        {% for cluster in clusters %}
+          <div class="cluster">
+            <h2>Cluster {{ loop.index }}</h2>
+            <p class="muted">Created {{ cluster['created_at'] }}</p>
+            <div class="grid">
+              {% for filename in members.get(cluster['id'], []) %}
+                <article class="card">
+                  <img src="{{ url_for('serve_upload', filename=filename) }}" alt="Cluster image" />
+                </article>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No clusters yet. Upload images and look for faces.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

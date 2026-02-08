@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Search Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>Search Results</h1>
+      <p>Query: <strong>{{ query }}</strong></p>
+    </div>
+    <nav>
+      <a href="{{ url_for('index') }}">Overview</a>
+      <a href="{{ url_for('clusters') }}">Clusters</a>
+      <a href="{{ url_for('events') }}">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Matches</h2>
+      {% if images %}
+      <div class="grid">
+        {% for image in images %}
+          <article class="card">
+            <img src="{{ url_for('serve_upload', filename=image['normalized_filename']) }}" alt="Matching image" />
+            <div class="card-body">
+              <p><strong>Tag:</strong> {{ image['tag'] }}</p>
+              <p><strong>Quality:</strong> {{ '%.2f'|format(image['quality_score']) }}</p>
+              <p><strong>Faces:</strong> {{ image['faces_detected'] }}</p>
+              <p><strong>Event:</strong> {{ image['event_key'] }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      {% else %}
+        <p>No results found.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

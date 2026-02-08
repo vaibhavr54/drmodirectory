@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Media Intelligence Pipeline Demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>Media Intelligence Pipeline</h1>
+      <p>Upload an image to run through ingestion, preprocessing, tagging, clustering, and event grouping.</p>
+    </div>
+    <nav>
+      <a href="{{ url_for('index') }}">Overview</a>
+      <a href="{{ url_for('clusters') }}">Clusters</a>
+      <a href="{{ url_for('events') }}">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Upload & Process</h2>
+      <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
+        <input type="file" name="image" accept="image/*" required />
+        <button type="submit">Run Pipeline</button>
+      </form>
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+      <div class="info-grid">
+        <div>
+          <h3>What happens?</h3>
+          <ul>
+            <li>Validate format + size.</li>
+            <li>Normalize and score quality.</li>
+            <li>Generate embeddings + tags.</li>
+            <li>Cluster face-like images.</li>
+            <li>Group events by timestamp.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Quick Search</h3>
+          <form action="{{ url_for('search') }}" method="get" class="search-form">
+            <input type="text" name="q" placeholder="Search warm / cool / neutral" />
+            <button type="submit">Search</button>
+          </form>
+          <p class="hint">Use the tags generated from dominant color.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Recent Images</h2>
+      {% if images %}
+      <div class="grid">
+        {% for image in images %}
+          <article class="card">
+            <img src="{{ url_for('serve_upload', filename=image['normalized_filename']) }}" alt="Uploaded image" />
+            <div class="card-body">
+              <p><strong>Tag:</strong> {{ image['tag'] }}</p>
+              <p><strong>Quality:</strong> {{ '%.2f'|format(image['quality_score']) }}</p>
+              <p><strong>Faces:</strong> {{ image['faces_detected'] }}</p>
+              <p><strong>Event:</strong> {{ image['event_key'] }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      {% else %}
+        <p>No images processed yet. Upload one to get started.</p>
+      {% endif %}
+    </section>
+
+    <section class="panel">
+      <h2>Face Search</h2>
+      <p>Upload a reference image to find visually similar images.</p>
+      <form id="face-search" class="upload-form">
+        <input type="file" name="image" accept="image/*" required />
+        <button type="submit">Find Matches</button>
+      </form>
+      <div id="face-results" class="grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Demo pipeline based on the provided architecture diagram.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

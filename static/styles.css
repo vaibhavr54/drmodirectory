@@ -1,0 +1,143 @@
+:root {
+  color-scheme: light;
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: #f5f6f8;
+  color: #1b1e24;
+}
+
+body {
+  margin: 0;
+}
+
+.hero {
+  background: #1d2235;
+  color: #f7f8fb;
+  padding: 2.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero a {
+  color: #f7f8fb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+main {
+  padding: 2.5rem 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panel {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(10, 12, 20, 0.08);
+}
+
+.upload-form,
+.search-form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #5b6bff;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4556f0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f9fafc;
+  border: 1px solid #eef0f6;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.error {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.cluster {
+  margin-bottom: 2rem;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.events-table th,
+.events-table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
